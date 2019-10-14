@@ -3,8 +3,5 @@
 *.exe
 *.o
 *.depend
-<<<<<<< HEAD
 *.layout
-=======
-*.layout
->>>>>>> 56e471094c7ca87dc10ce748d07f2057eeb5166d
+
