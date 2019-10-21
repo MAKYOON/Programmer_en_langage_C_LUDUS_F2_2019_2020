@@ -101,6 +101,68 @@ int main()
     // +=
     // -=
     // /=
-    //
+    // *=
+    // &=...
 
+    //Structures Conditions et Boucles
+
+    int i=0;
+    int taille = 10;
+
+    for (int i = 0; i < taille; i++)
+    {
+        if (i%2 == 0)
+        {
+            printf("%d est un multiple de 2\n", i);
+        }
+        else
+        {
+            printf("%d n'est pas un multiple de 2\n", i);
+        }
+    }
+
+    while (i<taille)
+    {
+        if ((i*2 < taille) && (i*2 > (taille/2)))
+        {
+            printf("%d multiplie par 2 est egal a %d ce qui est inferieur a %d\n",i,i*2,taille/2);
+        }
+        i++;
+    }
+
+    taille = 10;
+    i = 10;
+
+    do
+    {
+        taille+=i;
+        printf("taille est egal a %d\n", taille);
+        ++i;
+    } while (i<10);
+
+    //opérateur ternaire, fonctionne comme un if else mais en une ligne (le double point : signifie else)
+    int n_hp = 100;
+    printf("Le joueur est : %s\n", (n_hp>0) ? "en vie" : "mort");
+
+    //Switch case
+
+    int choix= -1;
+
+    printf("Veuillez entrer votre choix\n");
+    scanf("%d",&choix);
+    switch(choix)
+    {
+        case 0: printf("Quitter\n");
+        break;
+        case 1: printf("Calculer\n");
+        break;
+        case 2: printf("Jouer\n");
+        break;
+        default: printf("Default\n");
+        break; //pas obligé
+    }
+    return 0;
+
+    //Break dans une boucle : stop la boucle immédiatement
+    //Continue : arrête l'itération actuelle et passe à la prochaine
 }
