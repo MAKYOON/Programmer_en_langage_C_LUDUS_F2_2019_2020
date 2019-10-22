@@ -1,168 +1,229 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <ctype.h>
 
-#define NFOIS 5
-#define PI 3.14
-#define NOM "LI"
-#define CAR 'x'
+#define TAILLE 10
+#define MOT "HELLO"
 
-//PARTIE COURS
 
-/*#define ou #include correspondent à des MACROS qui seront utilisés lors de la compilation par le pré-processeur, cela signifie
-qu'à chaque appel de la macro, il devra faire référence au fichier ou à la donnée décrite dans cette macro.
-La compilation consiste à traduire le programme source en langage machine en faisant appel à un programme nommé "compilateur"
-En langage C, compte tenu de l'existence d'un pré processeur, cette opération de compilation comporte deux étapes : la première étant
-le traitement par le pré processeur. Ce dernier exécute les directives qui le concernent. On les reconnaît du fait qu'ils commencent par le caractère "#"
-Il produit en résultat un programme source en langage C. C'est un fichier qui reste au format texte et contient le code en C.
-La compilation est proprement dit la traduction du langage texte fourni par le pré processeur en langage machine.
-Le résultat de la compilation porte le nom du module .o (fichier objet).
-Le module object crée par l'ordinateur n'est pas tout de suite exécutable. Il lui manque au moins les différents modules correspondant aux fonctions prédéfinies utilisées par le programme (printf, scanf...).
-C'est effectivement le rôle de l'éditeur de liens d'aller chercher dans la bibliothèque les modules objets nécessaires.
-Le résultat de cette édition de lien est ce que l'on appel un EXECUTABLE ; càd un ensemble autonome d'instructions en langage machine.
-*/
-
-//#define NOM VALEUR_NUMRIQUE = définir une constante (NFOIS sera égale à 5)
-
-//Pour notre nomenclature :
-//- pour les entiers : préfixe de n (na ou n_a ou nA)
 int main()
 {
-    //Les variables en C
+   /* //Entrées et sorties conversationnelles
 
-    //Entiers
-    short int n_a; //short. pour le démarquer d'un standard : sn_a
-    int n_b;
-    long int n_c; //long. pour le démarquer : ln_a
+    //Affichage
+    printf("%d\n", TAILLE );
+    printf("%s\n", MOT );
 
-    printf("Taille de a : %d\n", sizeof(n_a));
-    printf("Taille de b : %d\n", sizeof(n_b));
-    printf("Taille de c : %d\n", sizeof(n_c));
+    //Saisie
+    int val;
+    printf("Saisissez une valeur\n");
+    scanf("%d",&val);
+    fflush(stdin);  //Vidage du buffer (sinon pb de buffer : "car" prend la valeur de "val" car le buffer n'est pas vidé et auto complète)
 
-    //Réels
-    float fltReelSimple;
-    double dblReelDouble;
+    char car;
+    printf("Saisissez un caractere\n");
+    scanf("%c",&car);
+    fflush(stdin);
 
-    printf("Taille de fltReelSimple : %d\n", sizeof(fltReelSimple));
-    printf("Taille de dblReelDouble : %d\n", sizeof(dblReelDouble));
+    char tabCar[TAILLE];
+    printf("Saisissez une chaine de caractere\n");
+    gets(tabCar); //gets prend par défaut stdin
+    //fgets(tabCar,100,stdin); //fgets = file get string, permet de get le flux d'un fichier ! fgets(chaine,taillemax,fichier)
+    printf("Vous avez ecrit : %s\n",tabCar);
+    //Quand on manipule une chaine en C, on finit toujours la chaîne par un \0 qui caractérise la fin de chaîne.
 
-    //Caractères
-
-    char c_Caractere;
-    printf("Taille de c_Caractere : %d\n", sizeof(c_Caractere));
-
-    //Constantes
-
-    const int cnT=10;
-    //la différence entre le #define et le mot clé "const" et le fait que
-    //à l'éxécution du programme, le prog va remplacer le mot clé du #define par la valeur
-    //alors qu'à la compilation, tout ce qui est déclaré sous la forme "const" sera automatiquement évaluée en mémoire
-
-    static int n_d; //le mot clé static permet de rendre une variable persistente (par exemple une variable qui
-                    //est normalement détruite à la sortie d'une méthode)
-
-    volatile int n_VolB; //Le préfixe volatile est notamment utilisé quand la variable d'un programme peut être modifiée par un autre programme
-
-    //Tester Define
-    printf("Ici on va afficher NFOIS : %d\n", NFOIS);
-    printf("Ici on va afficher PI : %f\n", PI);
-    printf("Ici on va afficher le NOM : %s\n", NOM);
-    printf("Ici on va afficher le CAR : %c\n", CAR);
-
-    //Opérateurs
-    int n_i=0;
-    ++n_i; //pré incrémentation => avant le déroulement des instructions
-    n_i++; //post incrémentation => après
-    // modulo : %
-    // division : /  ATTENTION : diviser 5/2 donne 2, mais 5.0/2.0 donne 2.5
-
-    //Cast
-    long double ldbl_LongDouble=105.89378973;
-    printf("Valeur de ldbl_LongDouble : %lf", (double)ldbl_LongDouble); //la on cast le long double en double
-
-    //Opérateurs relationnels
-    //Concrètement même chose qu'en JS
-
-    // <
-    // >
-    // >=
-    // <=
-    // ==
-    // !=
-
-    //Opérateurs logiques
-    //Pareil qu'en JS
-
-    // &&
-    // ||
-    // ! (NOT)
-
-    //Factorisations opérateurs
-    // +=
-    // -=
-    // /=
-    // *=
-    // &=...
-
-    //Structures Conditions et Boucles
-
-    int i=0;
-    int taille = 10;
-
-    for (int i = 0; i < taille; i++)
+    //tant qu'il saisit un caractère alphabétique majuscule ou minuscule on reste dans la boucle, sinon on sort
+    char c_Car;
+    printf("Entrez un caractere alphabetique majuscule ou minuscule sinon la boucle s'arrete\n");
+    c_Car = getchar();
+    while ((c_Car >= 'a' && c_Car <= 'z') || (c_Car >= 'A' && c_Car <= 'Z'))
     {
-        if (i%2 == 0)
-        {
-            printf("%d est un multiple de 2\n", i);
-        }
-        else
-        {
-            printf("%d n'est pas un multiple de 2\n", i);
-        }
+         printf("%c\n", c_Car );
+         fflush(stdin);
+         c_Car=getchar();
+    }
+    printf("Fin car non alphabétique\n"); */
+
+    //EXERCICE 1
+
+    /*int n_i, n_n, n_somme;
+    n_somme = 0;
+    for (n_i = 0; i < 4; n_i++)
+    {
+        printf("Donnez un entier\n");
+        scanf("%d", &n_n);
+        n_somme+=n_n;
+    }
+    printf("Somme : %d\n", n_somme );
+
+
+    n_i=0;
+    n_somme=0;
+
+    while (n_i<4)
+    {
+        printf("Donnez un entier\n");
+        scanf("%d",&n_n);
+        n_somme+=n_n;
+        n_i++;
     }
 
-    while (i<taille)
-    {
-        if ((i*2 < taille) && (i*2 > (taille/2)))
-        {
-            printf("%d multiplie par 2 est egal a %d ce qui est inferieur a %d\n",i,i*2,taille/2);
-        }
-        i++;
-    }
+     printf("Somme : %d\n", n_somme );
 
-    taille = 10;
-    i = 10;
+    n_i=0;
+    n_somme=0;
 
     do
     {
-        taille+=i;
-        printf("taille est egal a %d\n", taille);
-        ++i;
-    } while (i<10);
+        printf("Donnez un entier\n");
+        scanf("%d",&n);
+        somme += n;
+        i++;
+    } while (i<4);
+    printf("Somme : %d\n", somme );*/
 
-    //opérateur ternaire, fonctionne comme un if else mais en une ligne (le double point : signifie else)
-    int n_hp = 100;
-    printf("Le joueur est : %s\n", (n_hp>0) ? "en vie" : "mort");
+    //EXERCICE 2
 
-    //Switch case
-
-    int choix= -1;
-
-    printf("Veuillez entrer votre choix\n");
-    scanf("%d",&choix);
-    switch(choix)
+    /*float flt_note,moyenne;
+    int n_i=1;
+    moyenne = 0;
+    while (flt_note>=0)
     {
-        case 0: printf("Quitter\n");
-        break;
-        case 1: printf("Calculer\n");
-        break;
-        case 2: printf("Jouer\n");
-        break;
-        default: printf("Default\n");
-        break; //pas obligé
+        printf("Veuillez saisir une note, et terminez par une note negative\n");
+        scanf("%f",&flt_note);
+        if (flt_note>0)
+        {
+             printf("Note %d : %.2f\n", i, flt_note);
+             moyenne += flt_note;
+             i++;
+        }
     }
+    printf("La moyenne est de : %.2f\n", moyenne/i);*/
+
+    //CORRIGE 
+
+    /*int n_i=0;
+    float flt_moyenne,flt_note,flt_sommenote
+    do
+    {
+        printf("Donnez votre note\n");
+        scanf("%f",&flt_note);
+        if (flt_note>=0)
+        {
+            flt_sommenote+=flt_note;
+            nI++;
+        }
+    } while (flt_note>=0.0);
+
+    flt_moyenne=flt_sommenote/n_i;*/
+
+    //EXERCICE 3
+
+   /* int n_nbl,n_i,n_j;
+    printf("Entrez le nombre de lignes\n");
+    scanf("%d",&n_nbl);
+
+    for (n_i=0; n_i <= n_nbl; n_i++)
+    {
+        for (n_j = 0; n_j <= n_i; n_j++)
+        {
+            printf("*");
+        }
+        printf("\n");
+    }*/
+
+    //EXERCICE 4
+
+    /*int n_nb;
+    int n_premier = 1;
+    printf("Veuillez rentrer un entier\n");
+    scanf("%d",&n_nb);
+    if (n_nb==1)
+    {
+        n_premier = 0;
+    }
+    for (int i = 2 ; i < n_nb; i++)
+    {
+        if (n_nb%i == 0)
+        {
+            n_premier = 0;
+            break;
+        }
+    }  
+    if (n_premier == 0)
+        printf("Le nombre %d n'est pas premier\n", n_nb );
+    else
+        printf("Le nombre %d est premier\n", n_nb );*/
+
+    //CORRIGE
+    //En C, 0 = FAUX et tout ce qui est différent de 0 est VRAI
+
+    /* int n_n, n_d;
+    do{
+        printf("Donnez un entier superieur a 2\n");
+        scanf("%d",&n_n);
+    } while (n_n<=2);
+
+    n_d=2;
+    while((n_n%n_d)&& (n_d<=sqrt(n_n)))
+        n_d++;
+    if(n_n%n_d)
+        printf("%d est premier \n", n_n);
+    else
+        printf("%d pas premier \n", n_d);*/
+
+    //Exercice 5
+    /*int n_u1,n_u2,n_u3;
+    int n_n, n_i;
+    do{
+        printf("Veuillez entrer la n-ieme valeur de la suite de Fibonacci\n");
+        scanf("%d",&n_n);
+    } while(n_n<3);
+
+    n_u2 = n_u1 = 1;
+    n_i = 2;
+
+    while(n_i++<n_n)
+    {
+        n_u3=n_u1+n_u2;
+        n_u1=n_u2;
+        n_u2=n_u3;
+    }
+
+    printf("La valeur du terme du rang %d:%d\n", n_n,n_u3 );*/
+
+    //EXERCICE 6
+
+    const int NMAX=10;
+    int n_i, n_j;
+    printf("   I");
+    for (n_j = 1; n_j <= NMAX; n_j++)
+    {
+        printf("%4d", n_j );
+    }
+
+    printf("\n");
+    printf("-------");
+    for (n_j = 1; n_j <= NMAX; n_j++)
+    {
+        printf("-------");
+    }
+
+    printf("\n");
+
+    for (n_i = 1; n_i <= NMAX; n_i++)
+    {
+        printf("%4d", n_i );
+        for (n_j = 1; n_j <= NMAX; n_j++)
+        {
+            printf("%4d", n_i*n_j);
+        }
+        printf("\n");
+    }
+
+
     return 0;
 
-    //Break dans une boucle : stop la boucle immédiatement
-    //Continue : arrête l'itération actuelle et passe à la prochaine
 }
+
