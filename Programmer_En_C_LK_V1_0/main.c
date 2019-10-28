@@ -4,85 +4,106 @@
 #include <ctype.h>
 #include <string.h>
 
-#define NOM 100
-#define PRENOM 100
-#define ADRESSE 255
-#define CP 10
-#define VILLE 100
-#define CONTINUE 100
+#define TAILLE 10
 
+//Prototypes
+void initMatrice(int[][TAILLE], int); //on peut factoriser l'écriture en enlevant le nom des variables et en enlevant la première taille du tableau
+void afficheMatrice(int[][TAILLE]); //mais la deuxième dimension est tjrs obligatoire
+void initMatrice2(int [][TAILLE], int, int);
+int n_sommeEltMatrice (int[][TAILLE], int);
 
 int main()
 {
-   //LES TABLEAUX
+  int n_matriceEntier[TAILLE][TAILLE];
+  int n_matriceEntier2[5][TAILLE];
 
-    /*int n_tabInteger[TAILLE];
-    float flt_tabFloat[TAILLE];
-    double dbl_tabDouble[TAILLE];
+  initMatrice(n_matriceEntier,5);
+  initMatrice2(n_matriceEntier2,5,10);
+  afficheMatrice(n_matriceEntier);
 
-    char c_tabCar[TAILLE];
+    int i,j;
 
-    int n_i;
-
-    for (n_i = 0; n_i < TAILLE; n_i++)
+    //Affichage Matrice
+    for ( i = 0; i < 5; i++)
     {
-       n_tabInteger[n_i]=0;
-       flt_tabFloat[n_i]=0.0;
-       dbl_tabDouble[n_i]=0.0;
-       c_tabCar[n_i]='\0'; // '\0' correspond au caractère de fin de chaîne de caractères
-    }*/
-
-
-    static int n_ID=0; //static permet de rendre persistent la variable : si déclarée dans une procédure, elle pourra exister tout au long du programme
-    char c_tabNom[NOM];
-    char c_tabPrenom[PRENOM];
-    char c_tabAdresse[ADRESSE];
-    char c_tabCP[CP];
-    char c_tabVille[VILLE];
-
-    const char FinDeSaisie='n';
-    char c_tabContinue[CONTINUE];
-
-    do 
-    {
-        printf("Programme Carte Identite\n");
-        printf("Veuillez rentrer votre NOM\n");
-        fgets(c_tabNom,NOM,stdin);
-        fflush(stdin);
-        printf("Veuillez rentrer votre Prenom\n");
-        fgets(c_tabPrenom,NOM,stdin);
-        fflush(stdin);
-        printf("Veuillez rentrer votre adresse\n");
-        fgets(c_tabAdresse,ADRESSE,stdin);
-        fflush(stdin);
-        printf("Veuillez rentrer votre code postal\n");
-        //fgets(c_tabCP,CP,stdin);
-        scanf("%5s",c_tabCP);
-        fflush(stdin);  
-        printf("Veuillez rentrer votre ville\n");
-        fgets(c_tabVille,VILLE,stdin);
-        fflush(stdin);
-        ++n_ID;
-
-        //Affichage
-        printf("ID : %d\n", n_ID );
-        printf("Nom :%s", c_tabNom );
-        printf("Prenom :%s", c_tabPrenom);
-        printf("Adresse :%s", c_tabAdresse );
-        printf("CP :%s\n", c_tabCP );
-        printf("Ville :%s", c_tabVille );
-
-        do 
+        for (j = 0; j < TAILLE; j++)
         {
-            printf("Saisir une autre carte d'identite o/n ?\n");
-            scanf("%s",c_tabContinue);
-            fflush(stdin);
-        } while(strcmp(c_tabContinue,"o")&& strcmp(c_tabContinue,"n"));
+            printf("%3d", n_matriceEntier2[i][j] );
+        }
+        printf("\n");
+    }
 
-    } while(c_tabContinue[0]!=FinDeSaisie);
+  int n_resSommeMatrice = n_sommeEltMatrice(n_matriceEntier2,5);
+  printf("Resultat de la somme de notre matrice : %d\n", n_resSommeMatrice ); 
 
 
-    return 0;
+
+return 0;
+}
+
+//Implémentation des fonctions
+
+//Procédures
+
+void initMatrice(int n_matriceEntier[][TAILLE], int n_valInt)
+{
+     //Tableau 2 dimensions Entiers
+    int i,j;
+
+    //Initialisation Matrice
+    for ( i = 0; i < TAILLE; i++)
+    {
+        for (j = 0; j < TAILLE; j++)
+        {
+            n_matriceEntier[i][j] = n_valInt;
+        }
+    }
+}
+
+void afficheMatrice(int n_matriceEntier[TAILLE][TAILLE])
+{
+    int i,j;
+
+    //Affichage Matrice
+    for ( i = 0; i < TAILLE; i++)
+    {
+        for (j = 0; j < TAILLE; j++)
+        {
+            printf("%3d", n_matriceEntier[i][j] );
+        }
+        printf("\n");
+    }
 
 }
 
+void initMatrice2(int n_matriceEntier[][TAILLE], int n_nval, int n_valInt)
+{
+     //Tableau 2 dimensions Entiers
+    int i,j;
+
+    //Initialisation Matrice
+    for ( i = 0; i < n_nval; i++)
+    {
+        for (j = 0; j < TAILLE; j++)
+        {
+            n_matriceEntier[i][j] = n_valInt;
+        }
+    }
+}
+//Calcul
+
+int n_sommeEltMatrice (int n_matriceEntier[][TAILLE], int n_nval)
+{
+    int n_resSommeMatrice=0;
+    int i,j;
+
+    for ( i = 0; i < n_nval; i++)
+    {
+        for (j = 0; j < TAILLE; j++)
+        {
+            n_resSommeMatrice+=n_matriceEntier[i][j];
+        }
+    }
+
+    return n_resSommeMatrice;
+}
