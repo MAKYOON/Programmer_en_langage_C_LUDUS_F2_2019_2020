@@ -3,126 +3,303 @@
 #include <math.h>
 #include <ctype.h>
 #include <string.h>
+#include <time.h>
 
-#define TAILLE 100
+#define TAILLE 10
 
-//LES POINTEURS
-
-//En héxadécimal, les valeurs sont de 0 à 9 et de A à F
-//255(10) => 1(2^3) 1(2^2) 1(2^1) 1(2^0) / 1(2^3) 1(2^2) 1(2^1) 1(2^0)
-//  2^3 + 2^2 + 2^1 + 2^0 = 8+4+2+1 = 15(F) / 15(F)
-// Donc 255 en hexadécimal = FF
-
-
-//PROTOTYPES
-int sommeEntier(int,int);
-void somme2Entier (int, int ,int *);
-void f1();
-void f2(int);
-int f3(int);
-void f4();
 
 int main()
 {
-    //DECLARATION POINTEUR
-    //UN POINTEUR DOIT POINTER SUR UNE REFERENCE MEMOIRE
-    //UN POINTEUR, LORS DE SON INITIALISATION, DOIT AVOIR UNE REFERENCE NULL
-    int *pn_pointeurEntier=NULL;
+    struct t_point2 new_point3;
 
-    //Le pointeur pointe sur la référence de n_entier
-    int n_entier=10;
-    pn_pointeurEntier = &n_entier;
-    *pn_pointeurEntier = 88;
+    t_point new_point;
+    t_point *p_newPoint =&new_point; //on peut également pointer sur des types structurés
 
-    //fonction de la somme
-    n_entier=sommeEntier(10,88);
-    printf("%d\n", n_entier );
+    new_point.n_x=0;
+    new_point.n_y=0;
 
-    n_entier = 55;
+    p_newPoint->n_x=10;
+    p_newPoint->n_y=20;
 
-    //utilisation de la procédure avec un pointeur
-    int n_resSomme=0;
-    somme2Entier(56,12,&n_resSomme);
+    //formalisme du pointeur
+    (*p_new_point).n_x=50;
+    (*p_new_point).n_y=50;
 
-    //int **ppn_entier=&pn_pointeurEntier;
+    //Initialisation
+
+    t_point new_point2={0,0};
+
+    return 0;
+}*/
+
+/* /////// COURS ////////// */
+
+//PROTOTYPES
+
+/*char *tab_car (char c_chaine[100]);
+int *n_tabInt (int n_entier[100]);
+int *n_tabInt2D (int n_entier[10][10]);
+
+// *(p_int)++; //incrémentation de la référence
+// (*p_int)++; //incrémentation de l'entier stocké
 
 
-    //POINTEUR DE CARACTERES
-    char *p_char = NULL;
-    char c_Chaine[TAILLE]="Nicolas";
 
-    p_char=c_Chaine;
- 
+int main()
+{
+    //UTILISATION DU TABLEAU DE CARACTERES
 
-    
-    printf("\n");
-    //APPEL DES FONCTIONS EXERCICES EN C
-    f1();
-    f2(2);
-    f3(3);
+    char c_saisie[100]={"Votre Nom"}; //Déclaration tableau de caractères, l'utilisation de {} permet de passer sur chaque valeur
+    // si on fait c_saisie[100] = {0} alors on affecte 0 à toutes les valeurs
 
-    //EXERCICE 3
-    long int n_i=0;
-    while (n_i<217000)
+    char *c_nom;
+
+    //Formalisme tableau
+    c_nom=tab_car(c_saisie);
+
+    printf("Votre Nom %s\n", c_nom);
+
+
+    //UTILISATION DU TABLEAU D'ENTIERS
+
+    int n_entier[100]={0};
+    n_tabInt(n_entier); //ici chaque index de référence sera séparé de 4 car un entier est codé sur 4 octet contrairement au char qui est de 1
+
+    int n_entier2[10][10];
+    int *p_int=n_tabInt2D(n_entier2);
+
+    int n_i;
+    int *p;
+    for (n_i = 0; n_i < 100; n_i++)
     {
-        f4();
-        n_i++;
+        printf("%d", *(p_int)++ );
+        p=p_int;
     }
 
 
-return 0;
 }
 
-//fonction d'une somme
-int sommeEntier(int n_a, int n_b)
+char * tab_car (char c_chaine[100])
 {
-    return n_a+n_b;
-}
-//procédure pour réaliser une somme mais en utilisant un pointeur
-// => passage d'argument par adresse
-void somme2Entier (int n_a, int n_b, int *pn_res)
-{
-    *pn_res = n_a + n_b;
+    printf("Entrez votre nom\n");
+    scanf("%s",c_chaine);
+
+    return c_chaine;
 }
 
-//EXERCICE DE C
-
-void f1()
+int * n_tabInt(int n_entier[100])
 {
-    printf("Bonjour\n");
-}
+    int n_i;
 
-void f2(int a)
-{
-    for (int i = 0; i < a; i++)
+    //formalisme pointeur
+    for (n_i = 0; n_i < 100; n_i++)
     {
-       printf("Bonjour\n");
+        *(n_entier+n_i)=0; //revient à écrire n_entier[i]=0; le pointeur pointe sur la première référence, et on accède ensuite au reste  en incrémentant i
     }
+
+    return n_entier;
 }
 
-int f3(int a)
+int * n_tabInt2D (int n_entier[10][10])
 {
-    for (int i = 0; i < a; i++)
+    int n_i, n_j;
+
+    //formalisme pointeur
+    for (n_i = 0; n_i < 10; n_i++)
     {
-       printf("Bonjour\n");
+        for (n_j = 0; n_j < 10; n_j++)
+        {
+            *(*(n_entier+n_i)+n_j)=10; // n_entier[i][j] = 10;
+        }
     }
+
+    return (int*)n_entier;
+}*/
+
+/* ////// EXERCICES ////////// */
+
+
+//EXERCICE 1
+
+//FORMALISME TABLEAU
+
+/*int main()
+{
+    int n_i;
+    int n_tabInt[10] = {5,27,34,59,104,14,36,85,74,2};
+    int n_min = n_tabInt[0];
+    int n_max = n_tabInt[0];
+
+    for (n_i = 0; n_i < 10; n_i++)
+    {
+        if (n_tabInt[n_i] < n_min)
+            n_min = n_tabInt[n_i];
+        if (n_tabInt[n_i] > n_max)
+            n_max = n_tabInt[n_i];
+    }
+
+    printf("La valeur la plus petite est %d\n", n_min );
+    printf("La valeur la plus grande est %d\n", n_max );
+
 
     return 0;
 }
 
+//FORMALISME POINTEUR
+
+int main()
+{
+    int n_i;
+    int n_tabInt[10] = {5,27,34,59,104,14,36,85,74,2};
+    int n_min = n_tabInt[0];
+    int n_max = n_tabInt[0];
+
+    for (n_i = 0; n_i < 10; n_i++)
+    {
+        if (*(n_tabInt+n_i) < n_min)
+            n_min = *(n_tabInt+n_i);
+        if (*(n_tabInt+n_i) > n_max)
+            n_max = *(n_tabInt+n_i);
+    }
+
+    printf("La valeur la plus petite est %d\n", n_min );
+    printf("La valeur la plus grande est %d\n", n_max );
+
+
+    return 0;
+}*/
+
 //EXERCICE 2
-//Le programme va afficher 5 puis 3
+
+/*void minAndMaxValue(int n_tabInt[], int n_taille, int *n_min, int *n_max);
+
+int main()
+{
+    int n_i;
+    int n_tabInt[TAILLE];
+
+    printf("Donnez %d valeurs\n", TAILLE );
+    for (n_i = 0; n_i < TAILLE; n_i++)
+    {
+      scanf("%d",&n_tabInt[n_i]);
+    }
+    int n_min = n_tabInt[0];
+    int n_max = n_tabInt[0];
+
+    minAndMaxValue(n_tabInt,10,&n_min,&n_max);
+    printf("Min value : %d\n", n_min);
+    printf("Max value : %d\n", n_max);
+
+    return 0;
+}
+
+void minAndMaxValue(int n_tabInt[], int n_taille, int *n_min, int *n_max)
+{
+    int n_i;
+    for (n_i = 0; n_i < n_taille; n_i++)
+    {
+        if (n_tabInt[n_i] < *n_min)
+            *n_min = n_tabInt[n_i];
+        if (n_tabInt[n_i] > *n_max)
+            *n_max = n_tabInt[n_i];
+
+    }
+}*/
 
 //EXERCICE 3
 
-void f4()
+/*int * n_triTabInt (int n_tabInt[], int n_taille);
+
+int main()
 {
-    static long int ln_nbAppel=0;
-    static long int ln_appel=1;
-    ln_nbAppel++;
-    if (ln_nbAppel == ln_appel)
+    int n_i;
+    int n_tabInt[TAILLE];
+
+    printf("Donnez %d valeurs\n", TAILLE );
+    for (n_i = 0; n_i < TAILLE; n_i++)
     {
-        printf("*** %ld fois ***\n", ln_nbAppel );
-        ln_appel*=10;
+      scanf("%d",&n_tabInt[n_i]);
     }
+
+    n_triTabInt(n_tabInt,10);
+
+    for (n_i = 0; n_i < TAILLE; n_i++)
+    {
+        printf("Voici les valeurs classees en ordre croissant\n");
+        printf("%d\n", n_tabInt[n_i]);
+    }
+
+
+    return 0;
 }
+
+int * n_triTabInt (int n_tabInt[], int n_taille)
+{
+    int n_i, n_j;
+    int temp;
+
+    for (n_i = 0; n_i < n_taille; n_i++)
+    {
+        for (n_j = 0; n_j < (n_taille - n_i - 1); n_j++)
+        {
+            if (n_tabInt[n_j] > n_tabInt[n_j + 1])
+            {
+                temp = n_tabInt[n_j];
+                n_tabInt[n_j] = n_tabInt[n_j + 1];
+                n_tabInt[n_j + 1] = temp;
+            }
+        }
+    }
+
+    return n_tabInt;
+}*/
+
+//EXERCICE 4
+/*double * d_sommeMatrice(double n_matriceUne[TAILLE][TAILLE],double n_matriceDeux[TAILLE][TAILLE], double n_matriceTrois[TAILLE][TAILLE]);
+
+int main()
+{
+    double n_matriceUne[TAILLE][TAILLE];
+    double n_matriceDeux[TAILLE][TAILLE];
+    double n_matriceTrois[TAILLE][TAILLE];
+    int i,j;
+    srand(time(NULL));
+
+    for (i = 0; i < TAILLE; i++)
+    {
+        for (j = 0; j < TAILLE; j++)
+        {
+              n_matriceUne[i][j]=rand()%11;
+              n_matriceDeux[i][j]=rand()%11;
+        }
+    }
+
+    d_sommeMatrice(n_matriceUne,n_matriceDeux,n_matriceTrois);
+
+    for (i = 0; i < TAILLE; i++)
+    {
+        for (j = 0; j < TAILLE; j++)
+        {
+             printf("%f + %f = %f \n", n_matriceUne[i][j], n_matriceDeux[i][j], n_matriceTrois[i][j]);
+        }
+    }
+  
+    return 0;
+}
+
+double * d_sommeMatrice(double n_matriceUne[TAILLE][TAILLE],double n_matriceDeux[TAILLE][TAILLE], double n_matriceTrois[TAILLE][TAILLE])
+{
+    int i,j;
+
+    for (i = 0; i < TAILLE; i++)
+    {
+        for (j = 0; j < TAILLE; j++)
+        {
+              n_matriceTrois[i][j] = n_matriceUne[i][j]+n_matriceDeux[i][j];
+        }
+    }
+
+    return *n_matriceTrois;
+}*/
+
+
