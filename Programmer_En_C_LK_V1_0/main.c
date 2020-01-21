@@ -5,239 +5,238 @@
 #define TAILLE 100
 
 
+
+//type structuré récursif ou auto-référentiel (pointeur qui pointe sur lui-même)
+
+//il existe plusieurs catégories de chaînage : lorsque la structure contient une ou des données et un pointeur vers la structure suivante, on parle
+//de liste chaînée.
+
+//lorsque la structure contient une ou des données, un pointeur vers la structure suivante et un pointeur vers la structure précédente, on parle
+//de liste doublement chaînées.
+
+//lorsque la structure contient une ou des données, un pointeur vers une première structure suivante et un pointeur vers une seconde structure, on
+//parle d'arbre binaire
+
+//PILE LIFO
+
+typedef struct ElementPile
+{
+	int nombre;
+	struct ElementPile *suivant; 
+}ElementPile;
+
+typedef struct Pile
+{
+	ElementPile *premier;
+	int size;
+}Pile;
+
+//FILE FIFO
+
+typedef struct ElementFile
+{
+	int nombre;
+	struct ElementFile *suivant;
+}ElementFile;
+
+typedef struct File
+{
+	ElementFile *premier;
+	int size;
+}File;
+
+
+
+void affichePile(Pile *pile);
+void InitialisePile(Pile *pile);
+void empiler(Pile *pile, int n_nb);
+int depiler(Pile *pile);
+
+void InitialiseFile(File *file);
+void enfiler(File *file, int nvNombre);
+int defiler(File *file);
+void afficheFile(File *file);
+
+
 int main ()
 {
+	Pile *pile = malloc(sizeof(*Pile));
+	if (pile == NULL)
+		exit(EXIT_FAILURE);
+	InitialisePile(pile);
+	empiler(pile,3);
+	empiler(pile,6);
+	empiler(pile,9);
+	empiler(pile,12);
+	empiler(pile,15);
+	empiler(pile,18);
+	empiler(pile,21);
+	printf("Voici la pile a l'etat initial :\n");
+	affichePile(pile);
 
+	while (pile->size != 0)
+	{
+		printf("Je depile : %d\n",depiler(pile));
+		printf("La taille de la pile est : %d\n", pile->size );
+	}
 
+	printf("______________________\n");
 
-//Les fichiers
+	File *file = malloc(sizeof(*File));
+		if (file == NULL)
+			exit(EXIT_FAILURE);
+	InitialiseFile(file);
+	enfiler(file,3);
+	enfiler(file,6);
+	enfiler(file,9);
+	enfiler(file,12);
+	enfiler(file,15);
+	enfiler(file,18);
+	enfiler(file,21);
+	printf("Voici la file a l'etat initial : \n");
+	afficheFile(file);
 
+	while (file->size != 0)
+	{
+		printf("Je defile : %d\n",defiler(file));
+		printf("La taille de la file est : %d\n", file->size );
+	}
 
-/* string containing a file access mode. It can be:
-"r" read: Open file for input operations. The file must exist.
-"w" write: Create an empty file for output operations. If a file with the same name already exists, its contents are discarded and the file is treated as a new empty file.
-"a" append: Open file for output at the end of a file. Output operations always write data at the end of the file, expanding it.
-            Repositioning operations (fseek, fsetpos, rewind) are ignored. The file is created if it does not exist.
-"r+" read/update: Open a file for update (both for input and output). The file must exist.
-"w+" write/update: Create an empty file and open it for update (both for input and output).
-                    If a file with the same name already exists its contents are discarded and the file is treated as a new empty file.
-"a+" append/update: Open a file for update (both for input and output) with all output operations writing data at the end of the file.
-                    Repositioning operations (fseek, fsetpos, rewind) affects the next input operations, but output operations move the position back to the end of file. The file is created if it does not exist.
-*/
-int saisie(char cSaisie[100],int nTaille);
+	free(pile);
+	free(file);
 
+	return 0;
+}
 
+//FONCTIONS POUR LA PILE
 
-int main()
+void InitialisePile(Pile *pile)
 {
-
-    char cnomFichier[TAILLE];
-    FILE *fSortie=NULL;//Descripteur de fichier
-    FILE *fEntree=NULL;//Descripteur de fichier
-
-    //Les fichiers txt
-
-    char cSaisie[100];//chaine de saisie
-    int errnum=0;
-    int nVal=0;
-    int nNombreVal=0;
-    int nOccurence=0;
-
-
-    //Saisie de valeurs numeriques dans le fichier
-   /* printf("Donnez le nom du fichier a creer : \n");
-    scanf("%20s",cnomFichier);
-    fflush(stdin);
-    if((fSortie=fopen(cnomFichier,"w"))==NULL){//Ouverture en ecriture
-            fprintf(stderr,"Erreur ouverture fichier :%s\n",strerror(errnum));
-            //Gestion des erreurs
-    }else{
-            do{
-                    printf("donnez un entier : \n");
-                    scanf("%d",&nVal);//Saisie de notre entier
-                    if(nVal!=0){
-                        fprintf(fSortie,"%d\n",nVal);//Ecriture formate dans le fichier
-                        nOccurence++;//Compte le nombre de valeurs saisies
-                    }
-            }while(nVal);
-    }
-    fclose(fSortie);//fermeture du descripteur de fichier
-    printf("Donnez le nom du fichier a lister : \n");
-    scanf("%20s",cnomFichier);
-    fflush(stdin);
-    if((fEntree=fopen(cnomFichier,"r"))==NULL){
-            fprintf(stderr,"Erreur ouverture fichier :%s\n",strerror(errnum));
-             //Gestion des erreurs
-    }else{
-            while(nNombreVal<nOccurence){
-                fscanf(fEntree,"%d",&nVal);// lecture formate dans le fichier, affectation de la valeur  dans nVal
-                printf("%d",nVal);//Affichage a l'ecran de la valeur
-                nNombreVal++;
-            }
-    }
-    fclose(fEntree);//fermeture du descripteur fichier*/
-
-
-
-   /* printf("Donnez le nom du fichier a creer : \n");
-    scanf("%20s",cnomFichier);
-    fflush(stdin);
-    if((fSortie=fopen(cnomFichier,"w"))==NULL){
-            fprintf(stderr,"Erreur ouverture fichier :%s\n",strerror(errnum));
-             //Gestion des erreurs
-    }else{
-            //do{
-            //    fgets(cSaisie,sizeof(cSaisie),stdin);
-            //    fputs(cSaisie,fSortie);
-            //}while(positionEntree=strchr(cSaisie,'\n'),positionEntree!=NULL?*positionEntree='\0':fflush(stdin),strcmp(cSaisie,":q")!=0)
-            //suppression du carcatere de saut ligne et test si chaine equivalente a :q
-            while(saisie(cSaisie,100)&&strcmp(cSaisie,":q")){
-                fputs(cSaisie,fSortie); //Ecriture de la chaine dans le fichier
-                fputc('\n',fSortie);//Ajout du caractere saut de ligne pour chaque ligne du fichier
-            }
-    }
-    fclose(fSortie);//fermeture du descripteur fichier
-    printf("Donnez le nom du fichier a lister : \n");
-    scanf("%20s",cnomFichier);
-    fflush(stdin);
-    if((fEntree=fopen(cnomFichier,"r"))==NULL){
-            fprintf(stderr,"Erreur ouverture fichier :%s\n",strerror(errnum));
-             //Gestion des erreurs
-    }else{
-        while (fgets(cSaisie, 100, fEntree) != NULL) // On lit les chaines de caracteres tant que la reference est differente de NULL
-        {
-            printf("%s", cSaisie); // On affiche la chaine que nous venons de lire
-        }
-    }
-    fclose(fEntree);//fermeture du descripteur fichier*/
-
-
-
-    //Les Fichiers Binaires
-
-
-    printf("Donnez le nom du fichier a creer : \n");
-    scanf("%20s",cnomFichier);
-    fflush(stdin);
-
-
-    if((fSortie=fopen(cnomFichier,"wb"))==NULL){
-
-          fprintf(stderr,"Erreur ouverture fichier :%s\n",strerror(errnum));//Gestion des erreurs
-    }else{
-
-        do{
-            printf("donnez un entier : \n");
-            scanf("%d",&nVal);
-
-            if(nVal)
-                fwrite(&nVal,sizeof(int),1,fSortie);//Ecriture dans le fichier en mode binaire
-            //Cette fonction permet d'écrire un certain nombre d'octets vers le flux
-            //spécifié en quatrième paramètre.
-            //Les octets à écrire seront stockés dans le buffer passé en premier paramètre. Pour spécifier le nombre d'octets à écrire,
-            //il faut jouer sur deux paramètres : le nombre de bloc d'octets à lire
-            //ainsi que la taille de chacun des blocs.
-        }while(nVal);
-
-
-    }
-
-
-    fclose(fSortie);
-
-    printf("Donnez le nom du fichier a lister : \n");
-    scanf("%20s",cnomFichier);
-    fflush(stdin);
-
-    if((fEntree=fopen(cnomFichier,"rb"))==NULL){
-
-         fprintf(stderr,"Erreur ouverture fichier :%s\n",strerror(errnum));//Gestion des erreurs
-    }else{
-
-
-    //Cette fonction permet de lire un certain nombre d'octets à partir
-    //d'un flux. L'ensemble des octets lu seront stockés dans un buffer
-    //passé en premier paramètre : il faut donc être certain que le buffer
-    // est bien de taille suffisante, par rapport à la taille des données
-    // demandées. Pour spécifier le nombre d'octets à lire,
-    //il faut jouer sur deux paramètres : le nombre de bloc d'octets
-    //à lire ainsi que la taille de chacun des blocs.
-    //La taille totale du buffer à allouer sera donc le produit de
-    //ces deux tailles précédentes.
-        while(fread(&nVal,sizeof(int),1,fEntree)&&!feof(fEntree))//Lecture dans le fichier en mode binaire
-            printf("\n%d",nVal);
-
-    }
-
-    fclose(fEntree);
-
-    // do{
-    //     fread(&nVal,sizeof(int),1,fEntree);
-    //      if(!feof(fEntree))
-    //        printf("\n%d",nVal);
-
-    //}while(!feof(fEntree));
-
-
-    printf("\nDonnez le nom du fichier a consulter : \n");
-    scanf("%20s",cnomFichier);
-    fflush(stdin);
-
-
-    if((fEntree=fopen(cnomFichier,"rb"))==NULL){
-
-        fprintf(stderr,"Erreur ouverture fichier :%s\n",strerror(errnum));//Gestion des erreurs
-    }else{
-
-        long nNum;
-        printf("\nEntrez le numero de l'entier cherche :\n");
-        scanf("%ld",&nNum);
-
-
-        while(nNum){
-
-            fseek(fEntree,sizeof(int)*(nNum-1),SEEK_SET);//Deplacement du crusor dans le fichier à la position sizeof(int)*(nNum-1)
-            fread(&nVal,sizeof(int),1,fEntree);//Lit les entiers du fichiers(4 octets), et stock la valeur à la référence de nVal.
-            printf("valeur : %d\n",nVal);
-
-
-
-            printf("Entrez le numero de l'entier cherche :\n");
-            scanf("%ld",&nNum);
-
-
-        }
-
-    }
-
-
-    fclose(fEntree);
-
-
-   return 0;
+	pile -> premier = NULL;
+	pile -> size = 0;
 }
 
+void empiler(Pile *pile, int n_nb)
+{
+	ElementPile *elementAEmpiler = malloc(sizeof(*ElementPile));
+	if (pile == NULL && elementAEmpiler == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		elementAEmpiler -> nombre = n_nb;
+		elementAEmpiler -> suivant = pile -> premier;
+		pile -> premier = elementAEmpiler;
+		pile -> size++;
+	}
 
-int saisie(char cSaisie[100],int nTaille){
+}
 
-    char *positionEntree = NULL;
+int depiler(Pile *pile)
+{
+	int nombredepile = 0;
+	ElementPile *elementADepiler = pile -> premier;
 
-
-    if(fgets(cSaisie,nTaille,stdin)!=NULL){
-
-        positionEntree=strchr(cSaisie,'\n');
-
-        positionEntree!=NULL?*positionEntree='\0':fflush(stdin);
-
-        return 1;
-    }else{
-
-        fflush(stdin);
-        return 0;
-
-    }
+	if (pile != NULL && elementADepiler != NULL)
+	{
+		nombredepile = elementADepiler -> nombre;
+		pile -> premier = elementADepiler -> suivant;
+		free(elementADepiler);
+		pile -> size--;
+		return nombredepile;
+	}
+	else
+		return 0;
 
 
 }
+
+void affichePile(Pile *pile)
+{
+	if (pile == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+
+	ElementPile *actuel = pile -> premier;
+	while (actuel != NULL)
+	{
+		printf("%d\n", actuel->nombre );
+		actuel = actuel -> suivant;
+	}
+
 }
 
+//FONCTIONS POUR LA FILE
+
+void InitialiseFile(File *file)
+{
+	file -> premier = NULL;
+	file -> size = 0;
+}
+
+void enfiler(File *file, int nvNombre)
+{
+	ElementFile *nouveau = malloc(sizeof(*nouveau));
+	if (file == NULL || nouveau == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+
+	nouveau->nombre = nvNombre;
+	nouveau->suivant = NULL;
+
+	if (file->premier != NULL) /* La file n'est pas vide */
+	{
+		/* On se positionne à la fin de la file */
+		ElementFile *elementActuel = file->premier;
+		while (elementActuel->suivant != NULL)
+		{
+			elementActuel = elementActuel->suivant;
+		}
+		elementActuel->suivant = nouveau;
+	}
+	else /* La file est vide, notre élément est le premier */
+	{
+		file->premier = nouveau;
+	}
+	file -> size++;
+}
+
+int defiler(File *file)
+{
+	if (file == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+
+	int nombreDefile = 0;
+
+	/* On vérifie s'il y a quelque chose à défiler */
+	if (file->premier != NULL)
+	{
+		ElementFile *elementDefile = file->premier;
+
+		nombreDefile = elementDefile->nombre;
+		file->premier = elementDefile->suivant;
+		free(elementDefile);
+		file -> size--;
+	}
+
+	return nombreDefile;
+}
+
+void afficheFile(File *file)
+{
+	if (file == NULL)
+		exit(EXIT_FAILURE);
+
+	ElementFile *elementActuel = file -> premier;
+
+	while (elementActuel != NULL)
+	{
+		printf("%d\n", elementActuel -> nombre );
+		elementActuel = elementActuel -> suivant;
+	}
+}
