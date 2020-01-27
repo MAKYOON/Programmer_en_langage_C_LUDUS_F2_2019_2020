@@ -1,0 +1,7 @@
+#Fichier GitIgnore
+
+*.exe
+*.o
+*.depend
+*.layout
+
