@@ -43,7 +43,7 @@ int main()
 
 	//test for list output
 	Element *elementTemp = dblList->first;
-	printf("Apres ajout, la liste doublement chainee contient : \n");
+	printf("After addition, the double linked list contains : \n");
 	for (int i = 0; i < dblList->size; i++)
 	{
 		printf("%d ", elementTemp->gameObject.key );
@@ -58,14 +58,16 @@ int main()
 	//liste output expected : 2 6 5
 	printf("\n");
 	elementTemp = dblList->first;
-	printf("Apres les retraits, la liste doublement chainee contient : \n");
+	printf("After removal, the double linked list contains: \n");
 	for (int i = 0; i < dblList->size; i++)
 	{
 		printf("%d ", elementTemp->gameObject.key );
 		elementTemp = elementTemp->next;
 	}
-
-	free(elementTemp);
+	printf("\n");
+	printf("Emptying list now...\n");
+	EmptyList(dblList);
+	printf("...List is now empty\n");
 
 	return 0;
 }

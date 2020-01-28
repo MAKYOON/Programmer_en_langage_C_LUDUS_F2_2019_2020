@@ -24,6 +24,7 @@ extern void PushLastList(DoubleLinkedList *dblList, GameObject gameObjectToAdd);
 extern void PushBeforeList(DoubleLinkedList *dblList, GameObject gameObject, int index);
 extern void PushAfterList(DoubleLinkedList *dblList, GameObject gameObjectToAdd, int index);
 extern void RemoveList(DoubleLinkedList *dblList, int index);
+extern void EmptyList(DoubleLinkedList *dblList);
 
 
 #endif // DBLLIST_H_DEFINED

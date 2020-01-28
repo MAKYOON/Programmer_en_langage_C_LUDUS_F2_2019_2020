@@ -1,6 +1,6 @@
 #include "dblList.h"
 
-
+//initialize first/last pointer to NULL and 0 for the size
 void InitialiseDblList(DoubleLinkedList *dblList)
 {
 	dblList->first = NULL;
@@ -8,6 +8,7 @@ void InitialiseDblList(DoubleLinkedList *dblList)
 	dblList->size = 0;
 }
 
+//this function pushes an element and it becomes the first element of the list
 void PushFirstList(DoubleLinkedList *dblList, GameObject gameObjectToAdd)
 {
 	Element *newElement = malloc(sizeof(*newElement));
@@ -34,6 +35,8 @@ void PushFirstList(DoubleLinkedList *dblList, GameObject gameObjectToAdd)
 	dblList->size++;
 }
 
+
+//this function pushes an element and it becomes the last element of the list
 void PushLastList(DoubleLinkedList *dblList, GameObject gameObjectToAdd)
 {
 	Element *newElement = malloc(sizeof(*newElement));
@@ -59,6 +62,7 @@ void PushLastList(DoubleLinkedList *dblList, GameObject gameObjectToAdd)
 	dblList->size++;
 }
 
+//this function takes into parameter an index, and pushes an element BEFORE the index of the element indicated
 void PushBeforeList(DoubleLinkedList *dblList, GameObject gameObjectToAdd, int index)
 {
 	if (dblList != NULL)
@@ -83,7 +87,7 @@ void PushBeforeList(DoubleLinkedList *dblList, GameObject gameObjectToAdd, int i
 	dblList->size++;
 }
 
-
+//this function takes into parameter an index, and pushes an element AFTER the index of the element indicated
 void PushAfterList(DoubleLinkedList *dblList, GameObject gameObjectToAdd, int index)
 {
 	if (dblList != NULL)
@@ -108,6 +112,7 @@ void PushAfterList(DoubleLinkedList *dblList, GameObject gameObjectToAdd, int in
 	dblList->size++;
 }
 
+//this function takes into parameter an index, and REMOVES the element AT the index indicated
 void RemoveList(DoubleLinkedList *dblList, int index)
 {
 	if (dblList != NULL)
@@ -117,27 +122,44 @@ void RemoveList(DoubleLinkedList *dblList, int index)
 		{
 			elementTemp = elementTemp->next;
 		}
+		//if there's only 1 element we just have to free the element
+		if (dblList->size == 1)
+		{
+			free(elementTemp);
+		}
+		else //else there's pointer to affect
+		{
+			//if it's the first element
+			if (elementTemp->prev == NULL)
+			{
+				dblList->first = elementTemp->next;
+				elementTemp->next->prev = NULL;
+			}
+			//else if it's the last element
+			else if (elementTemp->next == NULL)
+			{
+				dblList->last = elementTemp->prev;
+				elementTemp->prev->next = NULL;
+			}
+			//else it's in the middle of the list
+			else
+			{
+				elementTemp->prev->next = elementTemp->next;
+				elementTemp->next->prev = elementTemp->prev;	
+			}
+			free(elementTemp);
+		}
 
-		//if it's the first element
-		if (elementTemp->prev == NULL)
-		{
-			dblList->first = elementTemp->next;
-			elementTemp->next->prev = NULL;
-		}
-		//else if it's the last element
-		else if (elementTemp->next == NULL)
-		{
-			dblList->last = elementTemp->prev;
-			elementTemp->prev->next = NULL;
-		}
-		//else it's in the middle of the list
-		else
-		{
-			elementTemp->prev->next = elementTemp->next;
-			elementTemp->next->prev = elementTemp->prev;	
-		}
-
-		free(elementTemp);
 		dblList->size--;
 	}
+}
+
+//freeing all elements then the list
+void EmptyList(DoubleLinkedList *dblList)
+{
+	while (dblList->size > 0)
+	{
+		RemoveList(dblList,1);
+	}
+	free(dblList);
 }
