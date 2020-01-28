@@ -3,6 +3,7 @@
 
 #include "gameObject.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct Element
 {
@@ -25,6 +26,6 @@ extern void PushBeforeList(DoubleLinkedList *dblList, GameObject gameObject, int
 extern void PushAfterList(DoubleLinkedList *dblList, GameObject gameObjectToAdd, int index);
 extern void RemoveList(DoubleLinkedList *dblList, int index);
 extern void EmptyList(DoubleLinkedList *dblList);
-
+extern void DisplayList(DoubleLinkedList *dblList);
 
 #endif // DBLLIST_H_DEFINED

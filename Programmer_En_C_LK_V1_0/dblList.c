@@ -163,3 +163,17 @@ void EmptyList(DoubleLinkedList *dblList)
 	}
 	free(dblList);
 }
+
+void DisplayList(DoubleLinkedList *dblList)
+{
+	if (dblList != NULL)
+	{
+		Element *elementTemp = dblList->first;
+		for (int i = 0; i < dblList->size; i++)
+		{
+			printf("%d ", elementTemp->gameObject.key );
+			elementTemp = elementTemp->next;
+		}
+		printf("\n");
+	}
+}

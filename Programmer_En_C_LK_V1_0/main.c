@@ -17,7 +17,6 @@ int main()
 	GameObject gameObject4;
 	GameObject gameObject5;
 	GameObject gameObject6;
-
 	gameObject1.key = 1;
 	gameObject2.key = 2;
 	gameObject3.key = 3;
@@ -30,40 +29,48 @@ int main()
 
 	PushFirstList(dblList, gameObject1);
 	//liste output expected : 1
+	printf("Pushing '1' to 1st position : \n");
+	DisplayList(dblList);
+
 	PushFirstList(dblList, gameObject2);
 	//liste output expected : 2 1
+	printf("Pushing '2' to 1st position \n");
+	DisplayList(dblList);
+
 	PushFirstList(dblList, gameObject3);
 	//liste output expected : 3 2 1
+	printf("Pushing '3' to 1st position \n");
+	DisplayList(dblList);
+	
 	PushLastList(dblList,gameObject4);
+	printf("Pushing '4' to last position \n");
+	DisplayList(dblList);
 	//liste output expected : 3 2 1 4
+
 	PushBeforeList(dblList,gameObject5,4);
+	printf("Pushing '5' BEFORE the 4th number \n");
+	DisplayList(dblList);
 	//liste output expected : 3 2 1 5 4
+
 	PushAfterList(dblList,gameObject6,3);
+	printf("Pushing '6' AFTER the 3rd number  \n");
+	DisplayList(dblList);
 	//liste output expected : 3 2 1 6 5 4
 
-	//test for list output
-	Element *elementTemp = dblList->first;
-	printf("After addition, the double linked list contains : \n");
-	for (int i = 0; i < dblList->size; i++)
-	{
-		printf("%d ", elementTemp->gameObject.key );
-		elementTemp = elementTemp->next;
-	}
-
+	printf("Removing the number at position 1\n");
 	RemoveList(dblList,1);
+	DisplayList(dblList);
 	//liste output expected : 2 1 6 5 4
+	printf("Removing the number at last position\n");
 	RemoveList(dblList,dblList->size);
+	DisplayList(dblList);
 	//liste output expected : 2 1 6 5
+
+	printf("Removing the number at position 2\n");
 	RemoveList(dblList,2);
+	DisplayList(dblList);
 	//liste output expected : 2 6 5
-	printf("\n");
-	elementTemp = dblList->first;
-	printf("After removal, the double linked list contains: \n");
-	for (int i = 0; i < dblList->size; i++)
-	{
-		printf("%d ", elementTemp->gameObject.key );
-		elementTemp = elementTemp->next;
-	}
+	
 	printf("\n");
 	printf("Emptying list now...\n");
 	EmptyList(dblList);
