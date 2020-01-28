@@ -31,9 +31,15 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="dblList.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dblList.h" />
+		<Unit filename="gameObject.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="vect3.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
