@@ -126,6 +126,8 @@ void RemoveList(DoubleLinkedList *dblList, int index)
 		if (dblList->size == 1)
 		{
 			free(elementTemp);
+			dblList->first = NULL;
+			dblList->last = NULL;
 		}
 		else //else there's pointer to affect
 		{
@@ -145,7 +147,7 @@ void RemoveList(DoubleLinkedList *dblList, int index)
 			else
 			{
 				elementTemp->prev->next = elementTemp->next;
-				elementTemp->next->prev = elementTemp->prev;	
+				elementTemp->next->prev = elementTemp->prev;
 			}
 			free(elementTemp);
 		}
@@ -161,6 +163,8 @@ void EmptyList(DoubleLinkedList *dblList)
 	{
 		RemoveList(dblList,1);
 	}
+	printf("The list now contains : ");
+	DisplayList(dblList);
 	free(dblList);
 }
 
@@ -169,11 +173,16 @@ void DisplayList(DoubleLinkedList *dblList)
 	if (dblList != NULL)
 	{
 		Element *elementTemp = dblList->first;
-		for (int i = 0; i < dblList->size; i++)
+		while (elementTemp != NULL)
+        {
+            printf("%d ", elementTemp->gameObject.key );
+			elementTemp = elementTemp->next;
+        }
+		/*for (int i = 0; i < dblList->size; i++)
 		{
 			printf("%d ", elementTemp->gameObject.key );
 			elementTemp = elementTemp->next;
-		}
+		}*/
 		printf("\n");
 	}
 }
