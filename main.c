@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 {
     SDL_Window *pWindow=NULL; //Pointeur typedef SDL_Window possède la référence d'un window(Win32)
     SDL_Renderer *pRenderer=NULL; //Pointeur typedef SDL_RENDERER possède la référence du rendu encapsulé dans Window
-    SDL_Texture *pTexture=NULL; //Pointeur typedef SDL_TEXTURE possède la référence l'objet image, matériel ou texture qui sera blité dans le rendu(renderer)
+    //SDL_Texture *pTexture=NULL; //Pointeur typedef SDL_TEXTURE possède la référence l'objet image, matériel ou texture qui sera blité dans le rendu(renderer)
 
 
     //Initialisation d'SDL
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     		pRenderer = SDL_CreateRenderer(pWindow,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     	}
     	SDL_SetRenderDrawColor(pRenderer,255,0,0,SDL_ALPHA_OPAQUE);
-		SDL_RenderFillRect(pRenderer,NULL);
+		SDL_RenderClear(pRenderer);
 		SDL_RenderPresent(pRenderer);
 
 		SDL_Delay(5000);
