@@ -22,22 +22,16 @@ int main(int argc, char* argv[])
     		//create renderer
     		pRenderer = SDL_CreateRenderer(pWindow,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     	}
-    	SDL_SetRenderDrawColor(pRenderer,0,0,255,SDL_ALPHA_OPAQUE);
-		SDL_RenderFillRect(pRenderer,NULL);
-		SDL_RenderPresent(pRenderer);
-
-    	SDL_Delay(2000);
-
     	SDL_SetRenderDrawColor(pRenderer,255,0,0,SDL_ALPHA_OPAQUE);
-    	SDL_RenderClear(pRenderer);
 		SDL_RenderFillRect(pRenderer,NULL);
 		SDL_RenderPresent(pRenderer);
 
-		SDL_Delay(3000);
+		SDL_Delay(5000);
 
     	SDL_DestroyRenderer(pRenderer);
     	SDL_DestroyWindow(pWindow);
     	SDL_Quit();
+
     }
     else
     {
