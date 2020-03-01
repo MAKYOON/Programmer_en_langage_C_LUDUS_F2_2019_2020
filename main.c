@@ -9,20 +9,15 @@ int main(int argc, char* argv[])
 {
     SDL_Window *pWindow=NULL; //Pointeur typedef SDL_Window possède la référence d'un window(Win32)
     SDL_Renderer *pRenderer=NULL; //Pointeur typedef SDL_RENDERER possède la référence du rendu encapsulé dans Window
-    //SDL_Texture *pTexture=NULL; //Pointeur typedef SDL_TEXTURE possède la référence l'objet image, matériel ou texture qui sera blité dans le rendu(renderer)
 
-    //radius of the circle
-    int r = 30;
-    //x coordinate of the point to place
-    int x = 0;
-    //y coordinate of the point to place
-    int y = r;
-    //decision parameter to decide where we should place the pixel according to Bresenham's algorithm
-    int d = 3 - (2*r);
-    //x coordinate of the center of the circle
-    int xc = 400;
-    //y coordinate of the center of the circle
-    int yc = 400;
+    SDL_Rect myRect;
+
+    myRect.x = 400;
+    myRect.y = 400;
+    myRect.w = 300;
+    myRect.h = 300;
+
+   
     //Initialisation d'SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
     {
@@ -38,17 +33,18 @@ int main(int argc, char* argv[])
     	SDL_SetRenderDrawColor(pRenderer,255,0,0,SDL_ALPHA_OPAQUE);
     	SDL_RenderClear(pRenderer);
 
-    	SDL_SetRenderDrawColor(pRenderer,0,0,0,SDL_ALPHA_OPAQUE);
+    	//creating red surface of 200x200
+    	SDL_Surface *pSurface = SDL_CreateRGBSurface(0,200,200,32,0,0,0,0);
+    	SDL_FillRect(pSurface,NULL,SDL_MapRGB(pSurface->format,0,0,255));
+    	//Creating white surface of 500x500
+    	SDL_Surface *blitTarget = SDL_CreateRGBSurface(0,500,500,32,0,0,0,0);
+    	SDL_FillRect(blitTarget,NULL,SDL_MapRGB(blitTarget->format,255,255,255));
 
-    	for(y= -r; y<=r; y++)
-    	{
-   			for(x=-r; x<=r; x++)
-   			{
-		        if(x*x+y*y <= r*r)
-		            SDL_RenderDrawPoint(pRenderer,xc+x, yc+y);
-		    }
-		}
-		SDL_RenderPresent(pRenderer);
+    	SDL_Texture *pTexture = SDL_CreateTextureFromSurface(pRenderer,pSurface);
+
+    	//blitting red surface inside of white surface 
+    	SDL_BlitSurface(pSurface,NULL,blitTarget,NULL);
+    	SDL_RenderPresent(pRenderer);
 
 	    SDL_Delay(5000);
 	    	
