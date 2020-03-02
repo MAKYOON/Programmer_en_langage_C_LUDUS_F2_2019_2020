@@ -3,19 +3,12 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 
-void DrawPoint(int xc, int yc, int x, int y, SDL_Renderer *pRenderer);
-
 int main(int argc, char* argv[])
 {
     SDL_Window *pWindow=NULL; //Pointeur typedef SDL_Window possède la référence d'un window(Win32)
     SDL_Renderer *pRenderer=NULL; //Pointeur typedef SDL_RENDERER possède la référence du rendu encapsulé dans Window
 
-    SDL_Rect myRect;
-
-    myRect.x = 400;
-    myRect.y = 400;
-    myRect.w = 300;
-    myRect.h = 300;
+    int w,h;
 
    
     //Initialisation d'SDL
@@ -32,20 +25,11 @@ int main(int argc, char* argv[])
 
     	SDL_SetRenderDrawColor(pRenderer,255,0,0,SDL_ALPHA_OPAQUE);
     	SDL_RenderClear(pRenderer);
-
-    	//creating red surface of 200x200
-    	SDL_Surface *pSurface = SDL_CreateRGBSurface(0,200,200,32,0,0,0,0);
-    	SDL_FillRect(pSurface,NULL,SDL_MapRGB(pSurface->format,0,0,255));
-    	//Creating white surface of 500x500
-    	SDL_Surface *blitTarget = SDL_CreateRGBSurface(0,500,500,32,0,0,0,0);
-    	SDL_FillRect(blitTarget,NULL,SDL_MapRGB(blitTarget->format,255,255,255));
-
-    	SDL_Texture *pTexture = SDL_CreateTextureFromSurface(pRenderer,pSurface);
-
-    	//blitting red surface inside of white surface 
-    	SDL_BlitSurface(pSurface,NULL,blitTarget,NULL);
-    	SDL_RenderPresent(pRenderer);
-
+    	
+    	SDL_Texture *myTexture = SDL_CreateTexture(pRenderer,SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET,100,100);
+    	SDL_QueryTexture(myTexture,NULL,NULL,&w,&h);
+    	printf("%d",w);
+    	printf("%d",h);
 	    SDL_Delay(5000);
 	    	
     	SDL_DestroyRenderer(pRenderer);
