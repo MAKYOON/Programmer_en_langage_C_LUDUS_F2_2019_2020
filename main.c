@@ -8,6 +8,13 @@ int main(int argc, char* argv[])
     SDL_Window *pWindow=NULL; //Pointeur typedef SDL_Window possède la référence d'un window(Win32)
     SDL_Renderer *pRenderer=NULL; //Pointeur typedef SDL_RENDERER possède la référence du rendu encapsulé dans Window
 
+    SDL_Rect myRect;
+
+    myRect.x = 200;
+    myRect.y = 200;
+    myRect.w = 150;
+    myRect.h = 150;
+
     //Initialisation d'SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
     {
@@ -24,7 +31,8 @@ int main(int argc, char* argv[])
     	SDL_RenderClear(pRenderer);
     	
     	SDL_Surface *myBMP = SDL_LoadBMP("chat.bmp");
-	    	
+    	SDL_Texture *BMPintoTexture = SDL_CreateTextureFromSurface(pRenderer,myBMP); 
+	    SDL_RenderCopy(pRenderer,BMPintoTexture,NULL,&myRect);
 	    SDL_RenderPresent(pRenderer);
 	    SDL_Delay(5000);
     	SDL_DestroyRenderer(pRenderer);
