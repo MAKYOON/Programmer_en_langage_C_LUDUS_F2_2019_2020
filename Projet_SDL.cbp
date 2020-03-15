@@ -18,9 +18,15 @@
 				</Compiler>
 				<Linker>
 					<Add option="-lmingw32" />
+					<Add option="-lSDL2main" />
+					<Add option="-lSDL2" />
+					<Add option="-lSDL2_image" />
 					<Add library="../../../../../../../Program Files (x86)/CodeBlocks/MinGW/lib/libmingw32.a" />
+					<Add library="../../../../../../Program Files (x86)/CodeBlocks/SDL2-2.0.10/i686-w64-mingw32/lib/libSDL2.a" />
 					<Add library="../../../../../../../Program Files (x86)/CodeBlocks/SDL2-2.0.10/i686-w64-mingw32/lib/libSDL2main.a" />
 					<Add library="../../../../../../../Program Files (x86)/CodeBlocks/SDL2-2.0.10/i686-w64-mingw32/lib/libSDL2.dll.a" />
+					<Add library="../../../../../../Program Files (x86)/CodeBlocks/SDL2-2.0.10/i686-w64-mingw32/lib/libSDL2_image.a" />
+					<Add library="../../../../../../Program Files (x86)/CodeBlocks/SDL2-2.0.10/i686-w64-mingw32/lib/libSDL2_image.dll.a" />
 					<Add directory="../../../../../../../Program Files (x86)/CodeBlocks/SDL2-2.0.10/i686-w64-mingw32/lib" />
 				</Linker>
 			</Target>
@@ -40,9 +46,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="circle.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="circle.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="sdl.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
