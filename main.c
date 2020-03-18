@@ -30,21 +30,23 @@ int main(int argc, char* argv[])
 		}
 
 
-
+		//file which has the level
 		FILE *file = fopen("level.txt","r");
-
+		//we load the tileset as a PNG in a surface and convert it to a texture
 		SDL_Surface *myPNG = IMG_Load("tileset.png");
 		SDL_Texture *tileset = SDL_CreateTextureFromSurface(SDLManager.pRenderer,myPNG);
-
+		SDL_FreeSurface(myPNG);
+		//calling our function to fill the array of tiles for the map
 		LoadMapTiles(map);
+		//this is to render a lightblue background
 		SDL_SetRenderDrawColor(SDLManager.pRenderer,0,153,219,SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(SDLManager.pRenderer);
-
+		//we display the map
 		DisplayMap(file,tileset,map,&SDLManager);
-
+		//slight delay before closing everything
         SDL_Delay(10000);
 
-
+        SDL_DestroyTexture(tileset);
 		SDL_DestroyRenderer(SDLManager.pRenderer);
 		SDL_DestroyWindow(SDLManager.pWindow);
 		SDL_Quit();
