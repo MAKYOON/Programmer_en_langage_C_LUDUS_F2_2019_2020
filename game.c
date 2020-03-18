@@ -26,21 +26,25 @@ void LoadMapTiles(Map *map)
 
 //this function displays the map, it takes into paramater : !
 //the file in which we wrote the identifiers of the tiles to display
-//the tileset 
+//the tileset
 //a pointer to the map
 //and the SDL_Manager structure in order to access the renderer to display the map
-void DisplayMap(FILE *fileLevel, SDL_Texture *tileset, Map *map, SDL_Manager *sdlManager)
+void DisplayMap(char fileName[BUFFER_SIZE], SDL_Texture *tileset, Map *map, SDL_Manager *sdlManager)
 {
+	//file which has the level
+	FILE *file = fopen(fileName,"r");
+    SDL_SetRenderDrawColor(sdlManager->pRenderer,0,153,219,SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(sdlManager->pRenderer);
 	for (int j = 0; j < map->max_y_map; j++)
 	{
 		for (int i = 0; i < map->max_x_map; i++)
 		{
-			SDL_Rect dstrect = {(i*map->width_tile)*SCALE,(j*map->height_tile)*SCALE,map->width_tile*SCALE,map->height_tile*SCALE};
+			SDL_Rect dstrect = {((i*map->width_tile)*SCALE) - map->scrollRect.x,((j*map->height_tile)*SCALE) - map->scrollRect.y,map->width_tile*SCALE,map->height_tile*SCALE};
 			int temp;
-			fscanf(fileLevel,"%d",&temp);
+			fscanf(file,"%d",&temp);
 			SDL_RenderCopy(sdlManager->pRenderer,tileset,&(map->tiles[temp].tileRect),&dstrect);
 		}
 	}
-	//updating the render to display everything we drew
-	SDL_RenderPresent(sdlManager->pRenderer);
+	fclose(file);
+    SDL_RenderPresent(sdlManager->pRenderer);
 }

@@ -16,6 +16,9 @@ int main(int argc, char* argv[])
 	map->max_y_map = NB_TILES_MAP_Y;
 	map->width_tile = WIDTH_TILESET/map->nbtiles_x;
 	map->height_tile = HEIGHT_TILESET/map->nbtiles_y;
+	map->scrollRect.x = 0;
+	map->scrollRect.y = 0;
+	int exit = FALSE;
 
 	//Initialization of SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
@@ -29,28 +32,42 @@ int main(int argc, char* argv[])
 			SDLManager.pRenderer = SDL_CreateRenderer(SDLManager.pWindow,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
 		}
 
+		SDL_Event event;
 
-		//file which has the level
-		FILE *file = fopen("level.txt","r");
 		//we load the tileset as a PNG in a surface and convert it to a texture
 		SDL_Surface *myPNG = IMG_Load("tileset.png");
 		SDL_Texture *tileset = SDL_CreateTextureFromSurface(SDLManager.pRenderer,myPNG);
 		SDL_FreeSurface(myPNG);
 		//calling our function to fill the array of tiles for the map
 		LoadMapTiles(map);
-		//this is to render a lightblue background
-		SDL_SetRenderDrawColor(SDLManager.pRenderer,0,153,219,SDL_ALPHA_OPAQUE);
-		SDL_RenderClear(SDLManager.pRenderer);
-		//we display the map
-		DisplayMap(file,tileset,map,&SDLManager);
-		//slight delay before closing everything
-        SDL_Delay(10000);
-
-        SDL_DestroyTexture(tileset);
-		SDL_DestroyRenderer(SDLManager.pRenderer);
-		SDL_DestroyWindow(SDLManager.pWindow);
-		SDL_Quit();
-
+		while (exit != TRUE)
+		{
+			while(SDL_PollEvent(&event))
+			{
+			  switch(event.type)
+			  	{
+				    case SDL_KEYDOWN:
+				    {
+				    	if (event.key.keysym.sym == SDLK_z)
+				    		map->scrollRect.y++;
+				    	else if (event.key.keysym.sym == SDLK_q)
+				    		map->scrollRect.x--;
+				    	else if (event.key.keysym.sym == SDLK_s)
+				    		map->scrollRect.y--;
+				    	else if (event.key.keysym.sym == SDLK_d)
+				    		map->scrollRect.x++;
+				    	else if (event.key.keysym.sym == SDLK_ESCAPE)
+				    		exit = TRUE;
+				    }
+			    }
+			}
+			SDL_RenderClear(SDLManager.pRenderer);
+			DisplayMap("level.txt",tileset,map,&SDLManager);
+		}
+			SDL_DestroyTexture(tileset);
+			SDL_DestroyRenderer(SDLManager.pRenderer);
+			SDL_DestroyWindow(SDLManager.pWindow);
+			SDL_Quit();
 	}
 	else
 	{

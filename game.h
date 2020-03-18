@@ -16,6 +16,7 @@
 #define NB_TILES_MAP_X 12
 #define NB_TILES_MAP_Y 6
 #define SCALE 2
+#define BUFFER_SIZE 1000
 
 //structure of 1 tile 
 typedef struct Tile
@@ -31,9 +32,10 @@ typedef struct Map
 	int nbtiles_x, nbtiles_y; //number of tiles in x of the tileset, and in y
 	int max_x_map, max_y_map; //number of tiles in x of the map, and in y
 	int width_tile,height_tile; //width and height of a tile, calculated from the width and height of the tileset (dynamically)
+	SDL_Rect scrollRect;
 }Map;
 
 
 void LoadMapTiles(Map *map);
-void DisplayMap(FILE *fileLevel, SDL_Texture *tileset, Map *map, SDL_Manager *sdlManager);
+void DisplayMap(char fileName[BUFFER_SIZE], SDL_Texture *tileset, Map *map, SDL_Manager *sdlManager);
 #endif
