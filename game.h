@@ -17,6 +17,7 @@
 #define NB_TILES_MAP_Y 6
 #define SCALE 2
 #define BUFFER_SIZE 1000
+#define SCROLL_SPEED 2
 
 //structure of 1 tile 
 typedef struct Tile

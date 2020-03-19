@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 	map->height_tile = HEIGHT_TILESET/map->nbtiles_y;
 	map->scrollRect.x = 0;
 	map->scrollRect.y = 0;
+	//we defined TRUE as 1 and FALSE as 0
 	int exit = FALSE;
 
 	//Initialization of SDL
@@ -40,24 +41,58 @@ int main(int argc, char* argv[])
 		SDL_FreeSurface(myPNG);
 		//calling our function to fill the array of tiles for the map
 		LoadMapTiles(map);
+
+		const Uint8 *keyStates = SDL_GetKeyboardState(NULL);
+
 		while (exit != TRUE)
 		{
+			//we check if there's an event, if so we store it into our event variable (which is of type SDL_Event)
 			while(SDL_PollEvent(&event))
 			{
 			  switch(event.type)
 			  	{
+			  		//we check if it's an input, in which case we handle the scrolling
 				    case SDL_KEYDOWN:
 				    {
-				    	if (event.key.keysym.sym == SDLK_z)
-				    		map->scrollRect.y++;
-				    	else if (event.key.keysym.sym == SDLK_q)
-				    		map->scrollRect.x--;
-				    	else if (event.key.keysym.sym == SDLK_s)
-				    		map->scrollRect.y--;
-				    	else if (event.key.keysym.sym == SDLK_d)
-				    		map->scrollRect.x++;
-				    	else if (event.key.keysym.sym == SDLK_ESCAPE)
+				    	//using SCANCODE, the SCANCODE W corresponds to the KEYCODE Z. so the input for us (using AZERTY keyboard) is Z.
+				    	if (keyStates[SDL_SCANCODE_W] && keyStates[SDL_SCANCODE_A])
+				    	{
+				    		map->scrollRect.y -= SCROLL_SPEED;
+				    		map->scrollRect.x -= SCROLL_SPEED;
+				    	}
+				    	else if (keyStates[SDL_SCANCODE_W] && keyStates[SDL_SCANCODE_D])
+				    	{
+				    		map->scrollRect.y -= SCROLL_SPEED;
+				    		map->scrollRect.x += SCROLL_SPEED;
+				    	}
+				    	else if (keyStates[SDL_SCANCODE_S] && keyStates[SDL_SCANCODE_A])
+				    	{
+				    		map->scrollRect.y += SCROLL_SPEED;
+				    		map->scrollRect.x -= SCROLL_SPEED;
+				    	}
+				    	else if (keyStates[SDL_SCANCODE_S] && keyStates[SDL_SCANCODE_D])
+				    	{
+				    		map->scrollRect.y += SCROLL_SPEED;
+				    		map->scrollRect.x += SCROLL_SPEED;
+				    	}
+				    	else if (keyStates[SDL_SCANCODE_W])
+				    		map->scrollRect.y -= SCROLL_SPEED;
+				    	else if (keyStates[SDL_SCANCODE_A])
+				    		map->scrollRect.x -= SCROLL_SPEED;
+				    	else if (keyStates[SDL_SCANCODE_S])
+				    		map->scrollRect.y += SCROLL_SPEED;
+				    	else if (keyStates[SDL_SCANCODE_D])
+				    		map->scrollRect.x += SCROLL_SPEED;
+				    	else if (keyStates[SDL_SCANCODE_ESCAPE])
 				    		exit = TRUE;
+
+				    	break;
+				    }
+				    //this is when the user clicks on the red cross to terminate the SDL_Window, in this case we exit the program.
+				    case SDL_QUIT:
+				    {
+				    	exit = TRUE;
+				    	break;
 				    }
 			    }
 			}
