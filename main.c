@@ -55,35 +55,15 @@ int main(int argc, char* argv[])
 				    case SDL_KEYDOWN:
 				    {
 				    	//using SCANCODE, the SCANCODE W corresponds to the KEYCODE Z. so the input for us (using AZERTY keyboard) is Z.
-				    	if (keyStates[SDL_SCANCODE_W] && keyStates[SDL_SCANCODE_A])
-				    	{
+				    	if (keyStates[SDL_SCANCODE_W])
 				    		map->scrollRect.y -= SCROLL_SPEED;
+				    	if (keyStates[SDL_SCANCODE_A])
 				    		map->scrollRect.x -= SCROLL_SPEED;
-				    	}
-				    	else if (keyStates[SDL_SCANCODE_W] && keyStates[SDL_SCANCODE_D])
-				    	{
-				    		map->scrollRect.y -= SCROLL_SPEED;
-				    		map->scrollRect.x += SCROLL_SPEED;
-				    	}
-				    	else if (keyStates[SDL_SCANCODE_S] && keyStates[SDL_SCANCODE_A])
-				    	{
+				    	if (keyStates[SDL_SCANCODE_S])
 				    		map->scrollRect.y += SCROLL_SPEED;
-				    		map->scrollRect.x -= SCROLL_SPEED;
-				    	}
-				    	else if (keyStates[SDL_SCANCODE_S] && keyStates[SDL_SCANCODE_D])
-				    	{
-				    		map->scrollRect.y += SCROLL_SPEED;
+				    	if (keyStates[SDL_SCANCODE_D])
 				    		map->scrollRect.x += SCROLL_SPEED;
-				    	}
-				    	else if (keyStates[SDL_SCANCODE_W])
-				    		map->scrollRect.y -= SCROLL_SPEED;
-				    	else if (keyStates[SDL_SCANCODE_A])
-				    		map->scrollRect.x -= SCROLL_SPEED;
-				    	else if (keyStates[SDL_SCANCODE_S])
-				    		map->scrollRect.y += SCROLL_SPEED;
-				    	else if (keyStates[SDL_SCANCODE_D])
-				    		map->scrollRect.x += SCROLL_SPEED;
-				    	else if (keyStates[SDL_SCANCODE_ESCAPE])
+				    	if (keyStates[SDL_SCANCODE_ESCAPE])
 				    		exit = TRUE;
 
 				    	break;
